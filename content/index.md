@@ -2,7 +2,7 @@
 layout: home
 hero:
   name: "Knowledge Base"
-  text: "of Beebles Laboratium"
+  text: "of Beebles Laboratorium"
   tagline:
   actions:
     - theme: brand
