@@ -5,7 +5,7 @@ author: "Russell Merrick"
 link: "https://www.oreilly.com/library/view/getting-started-with/9781098163471/"
 tags:
   - "building"
-createdAt: "2025-11-27T14:11:21.462Z"
+createdAt: "2025-11-27T14:20:20.147Z"
 ---
 
 # Getting Started with FPGAs
