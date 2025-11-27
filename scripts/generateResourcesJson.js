@@ -42,6 +42,7 @@ async function generateResourcesJson() {
       author: parsed.data.author || null,
       createdAt: parsed.data.createdAt || null,
       link: parsed.data.link || null,
+      useful: extractUseful(parsed.content),
       thumb,
       favicon,
       votes_weekly: stats ? stats.weekly : parsed.data.votes_weekly ?? 0,
@@ -110,6 +111,36 @@ async function loadVoteStats() {
 function normalizeSlug(file) {
   const withoutExt = file.replace(/\\/g, "/").replace(/\.md$/, "");
   return withoutExt.replace(/\/$/, "");
+}
+
+function extractUseful(content) {
+  if (!content) return null;
+
+  const usefulMatch = content.match(/(^|\n)##\s+Why is this resource useful\?\s*\n([\s\S]*?)(\n##\s|\n#\s|$)/i);
+  const section = usefulMatch ? usefulMatch[2].trim() : null;
+  const text = section
+    ? section
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .join(" ")
+    : null;
+
+  if (text) return truncate(text);
+
+  const paragraphs = content
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  if (paragraphs.length) return truncate(paragraphs[0]);
+
+  return null;
+}
+
+function truncate(text, max = 220) {
+  if (text.length <= max) return text;
+  return text.slice(0, max - 1).trimEnd() + "…";
 }
 
 if (require.main === module) {
