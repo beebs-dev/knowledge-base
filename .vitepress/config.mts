@@ -3,11 +3,11 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   cleanUrls: true,
   srcDir: "content",
-  base: "/knowledge-base",
+  base: "/wiki",
   ignoreDeadLinks: false,
-  title: "Knowledge Base",
-  titleTemplate: "Knowledge Base",
-  description: "Beebles Laboratorium Knowledge Base",
+  title: "Wiki",
+  titleTemplate: "Wiki",
+  description: "Beebles Laboratorium Wiki",
 
   locales: {
     root: {
@@ -40,7 +40,7 @@ export default defineConfig({
 
     socialLinks: [
       { icon: "discord", link: "https://beebs.dev/discord" },
-      { icon: "github", link: "https://github.com/beebs.dev/knowledge-base" },
+      { icon: "github", link: "https://github.com/beebs.dev/wiki" },
     ],
 
     footer: {
