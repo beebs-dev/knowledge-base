@@ -15,7 +15,7 @@ Find entries by category.
     <h2>{{ group.label }}</h2>
     <ul>
       <li v-for="page in group.pages" :key="page.url">
-        <a :href="page.url">{{ page.title }}</a>
+        <a :href="withBase(page.url)">{{ page.title }}</a>
         <span class="meta" v-if="page.author">· {{ page.author }}</span>
         <span class="meta" v-if="page.createdAt">· {{ formatDate(page.createdAt) }}</span>
       </li>
@@ -25,6 +25,7 @@ Find entries by category.
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { withBase } from "vitepress";
 
 const CATEGORY_LABELS: Record<string, string> = {
   tools: "Tools & Software",
