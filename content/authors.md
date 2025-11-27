@@ -39,21 +39,27 @@ const CATEGORY_LABELS: Record<string, string> = {
   misc: "Misc / Other",
 };
 
-const EXCLUDE = new Set(["/", "/index", "/categories", "/authors"]);
+const EXCLUDE_PATHS = new Set([
+  "./index.md",
+  "./categories.md",
+  "./authors.md",
+]);
+
+const pathToUrl = (path: string) => path.replace(/^\.\//, "/").replace(/\.md$/, "");
 
 const pages = Object.entries(import.meta.glob("./*.md", { eager: true }))
+  .filter(([path]) => !EXCLUDE_PATHS.has(path))
   .map(([path, mod]) => {
-    const fm = (mod as any).frontmatter || {};
-    const url = path === "./index.md" ? "/" : path.replace(/^\.\//, "/").replace(/\.md$/, "");
+    const pageData = (mod as any).__pageData || {};
+    const fm = (mod as any).frontmatter || pageData.frontmatter || {};
     return {
-      title: fm.title || "Untitled",
+      title: fm.title || pageData.title || "Untitled",
       category: fm.category || "misc",
       author: fm.author || "Unknown",
       createdAt: fm.createdAt || null,
-      url,
+      url: pathToUrl(path),
     };
-  })
-  .filter((p) => !EXCLUDE.has(p.url));
+  });
 
 const authors = computed(() => {
   const map = new Map<string, typeof pages>();

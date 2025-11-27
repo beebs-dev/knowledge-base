@@ -23,8 +23,7 @@ Filter by category or author to get to the right page fast.
 </div>
 
 <div v-if="filteredPages.length === 0" class="empty">
-  No entries yet. Add a file under <code>content/wiki/</code> with frontmatter that includes
-  <code>title</code>, <code>category</code>, and <code>author</code>.
+  No entries yet. To add, share them in <a href="https://beebs.dev/discord">Discord</a> in the #resources channel.
 </div>
 
 <ul v-else class="page-list">
@@ -37,8 +36,7 @@ Filter by category or author to get to the right page fast.
 </ul>
 
 <p class="helper">
-  Need the category list? See <a href="/categories">Categories</a>. Browse by author on <a href="/authors">Authors</a>.
-  To add or update entries, share them in <a href="https://beebs.dev/discord">Discord</a> and we'll publish them for you.
+  To add or update entries, share them in <a href="https://beebs.dev/discord">Discord</a> in the #resources channel and we'll publish them for you.
 </p>
 
 <script setup lang="ts">
@@ -57,21 +55,27 @@ const CATEGORY_LABELS: Record<string, string> = {
   misc: "Misc / Other",
 };
 
-const EXCLUDE = new Set(["/", "/index", "/categories", "/authors"]);
+const EXCLUDE_PATHS = new Set([
+  "./index.md",
+  "./categories.md",
+  "./authors.md",
+]);
+
+const pathToUrl = (path: string) => path.replace(/^\.\//, "/").replace(/\.md$/, "");
 
 const pages = Object.entries(import.meta.glob("./*.md", { eager: true }))
+  .filter(([path]) => !EXCLUDE_PATHS.has(path))
   .map(([path, mod]) => {
-    const fm = (mod as any).frontmatter || {};
-    const url = path === "./index.md" ? "/" : path.replace(/^\.\//, "/").replace(/\.md$/, "");
+    const pageData = (mod as any).__pageData || {};
+    const fm = (mod as any).frontmatter || pageData.frontmatter || {};
     return {
-      title: fm.title || "Untitled",
+      title: fm.title || pageData.title || "Untitled",
       category: fm.category || "misc",
       author: fm.author || "Unknown",
       createdAt: fm.createdAt || null,
-      url,
+      url: pathToUrl(path),
     };
   })
-  .filter((p) => !EXCLUDE.has(p.url))
   .sort((a, b) => a.title.localeCompare(b.title));
 
 const categoryEntries = Object.entries(CATEGORY_LABELS);
