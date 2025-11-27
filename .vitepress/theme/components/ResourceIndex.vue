@@ -1,26 +1,34 @@
 <template>
   <div class="resource-index">
-    <div class="controls">
-      <label for="resource-sort">Sort by</label>
-      <select id="resource-sort" v-model="mode">
-        <option value="alpha">A–Z</option>
-        <option value="weekly">Top Weekly</option>
-        <option value="monthly">Top Monthly</option>
-        <option value="all">Top All-Time</option>
-      </select>
+    <div class="header">
+      <div class="controls">
+        <label for="resource-sort">Sort</label>
+        <select id="resource-sort" v-model="mode">
+          <option value="alpha">A–Z</option>
+          <option value="weekly">Top Weekly</option>
+          <option value="monthly">Top Monthly</option>
+          <option value="all">Top All-Time</option>
+        </select>
+      </div>
+      <div class="meta" v-if="sorted.length">
+        <span>Total {{ sorted.length }} resources</span>
+        <span v-if="lastUpdated">Last updated: {{ lastUpdated }}</span>
+      </div>
     </div>
 
     <ul v-if="sorted.length" class="resource-list">
       <li v-for="item in sorted" :key="item.path" class="resource-row">
         <a :href="link(item.path)" class="resource-link">
-          <span class="title">{{ item.title }}</span>
-          <span class="score">⭐ {{ displayScore(item) }}</span>
+          <div class="title-line">
+            <span class="title">{{ item.title }}</span>
+            <span class="score">⭐ {{ displayScore(item) }}</span>
+          </div>
+          <div class="meta-row">
+            <span>Weekly {{ item.votes_weekly ?? 0 }}</span>
+            <span>Monthly {{ item.votes_monthly ?? 0 }}</span>
+            <span>All-time {{ item.votes_all_time ?? 0 }}</span>
+          </div>
         </a>
-        <div class="meta">
-          <span>Weekly {{ item.votes_weekly ?? 0 }}</span>
-          <span>Monthly {{ item.votes_monthly ?? 0 }}</span>
-          <span>All-time {{ item.votes_all_time ?? 0 }}</span>
-        </div>
       </li>
     </ul>
 
@@ -41,8 +49,15 @@ type ResourceEntry = {
   votes_all_time?: number;
 };
 
+type ResourcesPayload = { items: ResourceEntry[]; __meta?: { generated_at?: string; count?: number } };
+
+const payload = (resourcesData as ResourcesPayload) || { items: [] };
 const mode = ref<"alpha" | "weekly" | "monthly" | "all">("alpha");
-const resources = ref<ResourceEntry[]>(resourcesData as ResourceEntry[]);
+const resources = ref<ResourceEntry[]>(Array.isArray(payload) ? (payload as any) : payload.items || []);
+
+const lastUpdated = payload.__meta?.generated_at
+  ? new Date(payload.__meta.generated_at).toLocaleString()
+  : null;
 
 const sorted = computed(() => {
   const items = [...resources.value];
@@ -73,11 +88,26 @@ function byNumber<K extends keyof ResourceEntry>(key: K) {
   gap: 1rem;
 }
 
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .controls {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
+}
+
+.meta {
+  display: inline-flex;
+  gap: 0.75rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
 }
 
 select {
@@ -104,12 +134,15 @@ select {
 }
 
 .resource-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  display: block;
   text-decoration: none;
   color: inherit;
+}
+.title-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .title {
@@ -122,7 +155,7 @@ select {
   color: var(--vp-c-text-2);
 }
 
-.meta {
+.meta-row {
   margin-top: 0.35rem;
   display: flex;
   flex-wrap: wrap;

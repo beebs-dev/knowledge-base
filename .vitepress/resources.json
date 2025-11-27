@@ -1,9 +1,88 @@
-[
-  {
-    "title": "Example Resource",
-    "path": "/resources/example-resource",
-    "votes_weekly": 0,
-    "votes_monthly": 0,
-    "votes_all_time": 0
-  }
-]
+{
+  "__meta": {
+    "generated_at": "2025-11-27T17:10:41.305Z",
+    "count": 10
+  },
+  "items": [
+    {
+      "title": "A Mathematician’s Lament",
+      "path": "/a-mathematician-s-lament",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "Complete Kubernetes Course",
+      "path": "/complete-kubernetes-course",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "Example Resource",
+      "path": "/resources/example-resource",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": "000000000000000000"
+    },
+    {
+      "title": "Functional Parsing",
+      "path": "/functional-parsing",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "Generative Deep Learning 2nd Ed",
+      "path": "/generative-deep-learning-2nd-ed",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "Getting Started with FPGAs",
+      "path": "/getting-started-with-fpgas",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "I See What You Mean",
+      "path": "/i-see-what-you-mean",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "Manim (Mathemathical Animation Engine)",
+      "path": "/manim-mathemathical-animation-engine",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "Neural Networks Playlist",
+      "path": "/neural-networks-playlist",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    },
+    {
+      "title": "Ultralearning",
+      "path": "/ultralearning",
+      "votes_weekly": 0,
+      "votes_monthly": 0,
+      "votes_all_time": 0,
+      "discord_thread_id": null
+    }
+  ]
+}

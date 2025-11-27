@@ -28,7 +28,7 @@ Filter by category or author to get to the right page fast.
 
 <ul v-else class="page-list">
   <li v-for="page in filteredPages" :key="page.url">
-    <a :href="page.url">{{ page.title }}</a>
+    <a :href="withBase(page.url)">{{ page.title }}</a>
     <span class="meta">{{ categoryLabel(page.category) }}</span>
     <span class="meta" v-if="page.author">· {{ page.author }}</span>
     <span class="meta" v-if="page.createdAt">· {{ formatDate(page.createdAt) }}</span>
@@ -47,6 +47,7 @@ Filter by category or author to get to the right page fast.
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { withBase } from "vitepress";
 
 const CATEGORY_LABELS: Record<string, string> = {
   tools: "Tools & Software",
