@@ -1,7 +1,7 @@
-title: "Knowledge Base Index"
+title: "Wiki Index"
 ---
 
-# Knowledge Base Index
+# Wiki Index
 
 Filter by category or author to get to the right page fast.
 
