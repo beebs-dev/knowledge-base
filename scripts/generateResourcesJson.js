@@ -33,7 +33,7 @@ async function generateResourcesJson() {
     const title = parsed.data.title || slug;
 
     const { thumb, favicon } = await resolveThumb(parsed.data.link);
-    const stats = voteStats.get(parsed.data.discord_thread_id) || { weekly: 0, monthly: 0, all: 0 };
+    const stats = voteStats.get(parsed.data.discord_thread_id) || null;
 
     entries.push({
       title,
@@ -44,9 +44,9 @@ async function generateResourcesJson() {
       link: parsed.data.link || null,
       thumb,
       favicon,
-      votes_weekly: parsed.data.votes_weekly ?? stats.weekly,
-      votes_monthly: parsed.data.votes_monthly ?? stats.monthly,
-      votes_all_time: parsed.data.votes_all_time ?? stats.all,
+      votes_weekly: stats ? stats.weekly : parsed.data.votes_weekly ?? 0,
+      votes_monthly: stats ? stats.monthly : parsed.data.votes_monthly ?? 0,
+      votes_all_time: stats ? stats.all : parsed.data.votes_all_time ?? 0,
       discord_thread_id: parsed.data.discord_thread_id || null
     });
   }
