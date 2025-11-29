@@ -1,4 +1,4 @@
-name: Deploy Wiki to Pages
+name: Deploy Atlas to Pages
 
 on:
   push:
